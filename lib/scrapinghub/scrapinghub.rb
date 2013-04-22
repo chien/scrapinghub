@@ -14,14 +14,13 @@ module Scrapinghub
       @base_url = url
     end
 
-    def get(method)
+    def get(method, parameters = {})
       if method.is_a? Symbol
-        api_method = get_method_url(method)
+        uri = get_method_url(method, parameters)
       else
-        api_method = build_url(method)
+        uri = build_url(method, parameters)
       end
 
-      (uri, parameters) = api_method
 
       Net::HTTP.start(uri.host, uri.port) do |http|
         request = Net::HTTP::Get.new(uri.request_uri)
@@ -40,14 +39,14 @@ module Scrapinghub
     end
 
     private
-    def build_url(api_method)
-      api_method.build(@base_url)
+    def build_url(api_method, parameters)
+      api_method.build(@base_url, parameters)
     end
 
-    def get_method_url(method)
+    def get_method_url(method, parameters)
       api_method = METHODS[method]
 
-      return build_url(api_method)
+      return build_url(api_method, parameters)
     end
   end
 end
