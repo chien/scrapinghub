@@ -11,7 +11,7 @@ module Scrapinghub
       build_params!
       build_uri!(base_url)
 
-      [@uri, @parameters]
+      @uri
     end
 
     def build_params!
@@ -24,6 +24,7 @@ module Scrapinghub
 
     def build_uri!(base_url)
       @uri = URI( File.join(base_url, @location) )
+      @uri.query = URI.encode_www_form(@parameters)
     end
   end
 end
