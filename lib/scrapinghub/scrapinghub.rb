@@ -33,7 +33,7 @@ module Scrapinghub
 
     def method_missing(method, *args, &block)
       if METHODS[method]
-        get(method)
+        get(method, args)
       else
         super
       end
