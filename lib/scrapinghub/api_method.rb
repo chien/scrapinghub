@@ -6,9 +6,7 @@ module Scrapinghub
     end
 
     def build(base_url, parameters = {})
-      @requires ||= []
-
-      parameters = {}
+      @parameters = parameters
 
       build_params!
       build_uri!(base_url)
@@ -17,14 +15,10 @@ module Scrapinghub
     end
 
     def build_params!
-      @parameters = {}
-
       @requires.each do |required_parameter|
-        unless @requires[required_parameter]
+        unless @parameters[required_parameter]
           raise ArgumentError.new "#{required_parameter} is required to access #{@location}"
         end
-
-        @parameters[required_parameter] = @requires[required_parameter]
       end
     end
 
