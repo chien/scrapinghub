@@ -43,8 +43,8 @@ module Scrapinghub
         when Net::HTTPFound
           new_location = URI(response['location'])
 
-          debug("<- #{uri.request_uri} redirects to")
-          debug("-> #{new_location.request_uri}")
+          debug "<- #{uri.request_uri} redirects to",
+                "-> #{new_location.request_uri}"
 
           fetch(new_location, redirect_limit-1)
         else
@@ -72,8 +72,8 @@ module Scrapinghub
       return build_url(api_method, parameters)
     end
 
-    def debug(message)
-      puts message
+    def debug(*messages)
+      puts messages.join("\n")
     end
   end
 end
