@@ -25,12 +25,31 @@ module Scrapinghub
         uri = build_url(method, parameters)
       end
 
+      fetch(uri)
+    end
+
+    def fetch(uri, redirect_limit = 5)
+      if redirect_limit <= 0
+        raise "Request redirected too many times."
+      end
 
       Net::HTTP.start(uri.host, uri.port) do |http|
         request = Net::HTTP::Get.new(uri.request_uri)
         request.basic_auth @api_key, ''
 
-        http.request request
+        response = http.request(request)
+
+        case response
+        when Net::HTTPFound
+          new_location = URI(response['location'])
+
+          debug("<- #{uri.request_uri} redirects to")
+          debug("-> #{new_location.request_uri}")
+
+          fetch(new_location, redirect_limit-1)
+        else
+          response
+        end
       end
     end
 
@@ -51,6 +70,10 @@ module Scrapinghub
       api_method = METHODS[method]
 
       return build_url(api_method, parameters)
+    end
+
+    def debug(message)
+      puts message
     end
   end
 end
