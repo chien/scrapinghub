@@ -48,7 +48,7 @@ module Scrapinghub
 
           fetch(new_location, redirect_limit-1)
         else
-          response
+          ApiResponse.new(response)
         end
       end
     end
