@@ -3,8 +3,12 @@ require_relative 'api_method'
 module Scrapinghub
   class Scrapinghub
     METHODS = {
-      projects:   ApiMethod.new('scrapyd/listprojects', []),
-      spiders:    ApiMethod.new('spiders/list', [:project])
+      projects:       ApiMethod.new('scrapyd/listprojects', []),
+      spiders:        ApiMethod.new('spiders/list', [:project]),
+      jobs:           ApiMethod.new('jobs/list', [:project]),
+      job:            ApiMethod.new('jobs/list', [:project, :job]),
+      job_items:      ApiMethod.new('items', [:project, :job]),
+      spider_items:   ApiMethod.new('items', [:project, :spider])
     }
 
     attr_reader :api_key
