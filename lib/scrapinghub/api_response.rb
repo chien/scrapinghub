@@ -1,3 +1,5 @@
+require 'json'
+
 module Scrapinghub
   class ApiResponse
     def initialize(net_http_request)

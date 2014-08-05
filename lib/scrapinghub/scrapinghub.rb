@@ -13,7 +13,7 @@ module Scrapinghub
 
     attr_reader :api_key
 
-    def initialize(api_key, url='http://panel.scrapinghub.com/api/')
+    def initialize(api_key, url='https://dash.scrapinghub.com/api/')
       @api_key = api_key
       @base_url = url
     end
@@ -33,7 +33,7 @@ module Scrapinghub
         raise "Request redirected too many times."
       end
 
-      Net::HTTP.start(uri.host, uri.port) do |http|
+      Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
         request = Net::HTTP::Get.new(uri.request_uri)
         request.basic_auth @api_key, ''
 
@@ -55,7 +55,7 @@ module Scrapinghub
 
     def method_missing(method, *args, &block)
       if METHODS[method]
-        get(method, args)
+        get(method, *args)
       else
         super
       end
