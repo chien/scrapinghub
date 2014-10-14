@@ -1,6 +1,6 @@
 module Scrapinghub
   class ApiMethod
-    def initialize(location, requires={}, format = :json)
+    def initialize(location, requires=[], format = :json)
       @location = "#{location}.#{format.to_s}"
       @requires = requires
     end
