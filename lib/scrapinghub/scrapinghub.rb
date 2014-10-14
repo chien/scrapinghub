@@ -13,9 +13,10 @@ module Scrapinghub
 
     attr_reader :api_key
 
-    def initialize(api_key, url='https://dash.scrapinghub.com/api/')
+    def initialize(api_key, url='https://dash.scrapinghub.com/api/', debug_mode=false)
       @api_key = api_key
       @base_url = url
+      @debug_mode = debug_mode
     end
 
     def get(method, parameters = {})
@@ -43,8 +44,10 @@ module Scrapinghub
         when Net::HTTPFound
           new_location = URI(response['location'])
 
-          debug "<- #{uri.request_uri} redirects to",
-                "-> #{new_location.request_uri}"
+          if @debug_mode
+            debug "<- #{uri.request_uri} redirects to",
+                  "-> #{new_location.request_uri}"
+          end
 
           fetch(new_location, redirect_limit-1)
         else
