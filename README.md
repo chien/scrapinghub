@@ -16,9 +16,23 @@ Or install it yourself as:
 
     $ gem install scrapinghub
 
+
 ## Usage
 
-TODO: Write usage instructions here
+Get Job Items
+
+```ruby
+  Scrapinghub::Scrapinghub.new("SCRAPING HUB API KEY").job_items(project: project_id, job: job_id)
+```
+
+##### Avaialbe methods:
+
+* projects
+* spiders - required param: { project: project_id }
+* jobs - required param: { project: project_id }
+* job - required param: { project: project_id, job: job_id }
+* job_items - required param: { project: project_id, job: job_id }
+* spider_items - required param: { project: project_id, spider: spider_id }
 
 ## Contributing
 
@@ -27,3 +41,4 @@ TODO: Write usage instructions here
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin feature/my-new-feature`)
 5. Create new Pull Request
+
